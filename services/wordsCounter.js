@@ -39,7 +39,7 @@ class WordsDB {
 
     }
 
-    async readWord(word) {
+    async getWordStatistics(word) {
         // TODO IDO try-catch?
         // here we also need a mutual exclusion (read only when there are no other parallel writes)
         return await this.mutex.runExclusive(async (_) => {

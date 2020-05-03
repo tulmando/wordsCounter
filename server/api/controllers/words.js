@@ -16,46 +16,35 @@ async function getWordStatistics(req, res, next) {
     }
 }
 
-async function countWordsFromTextInBody(req, res, next) {
+async function countWordsFromText(req, res, next) {
 
-    let text = req.body.text;
-
-    try {
-        await wordsBl.countWordsFromTextInBody(text);
-        res.status(201).json();
-    } catch (e) {
-        console.log('error in words.js, countWordsFromTextInBody. error: ' + e);
-        res.sendStatus(400);
-    }
-}
-
-async function countWordsFromTextInFilepath(req, res, next) {
-    let filepath = req.body.filepath;
+    let source = req.body.source;
 
     try {
-        await wordsBl.countWordsFromTextInFilepath(filepath);
-        res.status(201).json();
-    } catch (e) {
-        console.log('error in words.js, countWordsFromTextInFilepath. error: ' + e);
-        res.sendStatus(400);
-    }
-}
+        if (source === "body") {
+            let text = req.body.text;
+            await wordsBl.countWordsFromTextInBody(text);
+            res.status(201).json();
+        } else if (source === "filepath") {
+            let filepath = req.body.filepath;
+            await wordsBl.countWordsFromTextWithStream(filepath);
+            res.status(201).json();
+        } else if (source === "url") {
+            let url = req.body.url;
+            await wordsBl.countWordsFromTextWithStream(url);
+            res.status(201).json();
+        } else {
+            console.log('source parameter is not legal. expected: body/filepath/url. got: ' + source);
+            res.sendStatus(400);
+        }
 
-async function countWordsFromTextInUrl(req, res, next) {
-    let url = req.body.url;
-
-    try {
-        await wordsBl.countWordsFromTextInUrl(url);
-        res.status(201).json();
     } catch (e) {
-        console.log('error in words.js, countWordsFromTextInUrl. error: ' + e);
+        console.log('error in words.js, countWordsFromText. error: ' + e);
         res.sendStatus(400);
     }
 }
 
 module.exports = {
     getWordStatistics,
-    countWordsFromTextInBody,
-    countWordsFromTextInFilepath,
-    countWordsFromTextInUrl
+    countWordsFromText
 };

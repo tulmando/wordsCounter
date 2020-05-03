@@ -11,7 +11,7 @@ consumes:
 produces:
   - application/json
 paths:
-  /word-counter:
+  /word-statistics:
     x-swagger-router-controller: words
     get:
       description: get how many times the word appeared till now in former texts.
@@ -29,65 +29,33 @@ paths:
           description: how many time this word appeared
         default:
           description: Unexpected error
-  /word-counter/in-body:
+  /word-counter:
     x-swagger-router-controller: words
     post:
       description: count words in the text passed in the body.
-      operationId: countWordsFromTextInBody
+      operationId: countWordsFromText
       tags:
         - words
       parameters:
         - in: body
-          name: textObj
-          description: The coach to create.
+          name: text source
+          description: The source of the text to count words from.
           schema:
             required:
-              - text
+              - source
             properties:
+              source:
+                description: the text to parse and count words from- body/filepath/url.
+                type: string
+                enum: ["body", "filepath", "url"]
               text:
-                description: the text to parse and count words from.
+                description: the text to count words from (if source is body).
                 type: string
-      responses:
-        201:
-          description: words from the text were countered.
-  /word-counter/filepath:
-    x-swagger-router-controller: words
-    post:
-      description: count words in the text passed as a filepath.
-      operationId: countWordsFromTextInFilepath
-      tags:
-        - words
-      parameters:
-        - in: body
-          name: textObj
-          description: The coach to create.
-          schema:
-            required:
-              - filepath
-            properties:
               filepath:
-                description: the filepath of the text to parse and count words from.
+                description: the filepath of the text to count words from.
                 type: string
-      responses:
-        201:
-          description: words from the text were countered.
-  /word-counter/url:
-    x-swagger-router-controller: words
-    post:
-      description: count words in the text passed as a filepath.
-      operationId: countWordsFromTextInUrl
-      tags:
-        - words
-      parameters:
-        - in: body
-          name: textObj
-          description: The coach to create.
-          schema:
-            required:
-              - url
-            properties:
               url:
-                description: the filepath of the text to parse and count words from.
+                description: the url of the text to count words from.
                 type: string
       responses:
         201:

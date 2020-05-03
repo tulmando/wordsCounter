@@ -1,9 +1,12 @@
 // business logic for the words
 
 class WordsBl {
-    async getWordStatistics() {
-        // TODO
-        return 10 // TODO implement and delete
+    constructor() {
+        this.wordsCounter = require('../services').wordsCounter
+    }
+
+    async getWordStatistics(word) {
+        return await this.wordsCounter.getWordStatistics(word);
     }
 
     async countWordsFromTextInBody(text) {
@@ -11,16 +14,10 @@ class WordsBl {
         return
     }
 
-    async countWordsFromTextInFilepath(text) {
+    async countWordsFromTextWithStream(source) {
         // TODO implement
         return
     }
-
-    async countWordsFromTextInUrl(text) {
-        // TODO implement
-        return
-    }
-
 }
 
 let wordsBl;
