@@ -1,0 +1,30 @@
+{
+  "name": "wordscounter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tulmando/wordsCounter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async-mutex": "^0.2.2",
+    "axios": "^0.19.2",
+    "event-stream": "^4.0.1",
+    "express": "^4.16.4",
+    "lokijs": "^1.5.8",
+    "randomstring": "^1.1.5",
+    "swagger-express-mw": "^0.7.0",
+    "swagger-tools": "^0.10.1"
+  },
+  "bugs": {
+    "url": "https://github.com/tulmando/wordsCounter/issues"
+  },
+  "homepage": "https://github.com/tulmando/wordsCounter#readme"
+}

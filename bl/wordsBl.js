@@ -2,6 +2,7 @@
 const axios = require('axios');
 const fs = require('fs');
 const es = require('event-stream');
+const rs = require('randomstring');
 
 // TODO helpers
 
@@ -93,10 +94,11 @@ class WordsBl {
 
     async countWordsFromTextFromUrl(url) {
         let wordDict = {};
-        // TODO generate the output name (rand name)
         // output name should be random. Because there might be parallel calls for the api.
         // If we use the same file we won't count properly
-        const filenameForStream = 'temp-stream.txt';
+        const filenameForStream = 'temp-stream-' + rs.generate(7) + '.txt';
+        console.log('Generated filenameForStream:' + filenameForStream);
+
         // make sure the file doesn't exist. if it does, delete it.
         if (fs.existsSync(filenameForStream)) {
             fs.unlinkSync(filenameForStream);
