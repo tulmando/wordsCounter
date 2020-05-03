@@ -27,11 +27,11 @@ async function countWordsFromText(req, res, next) {
             res.status(201).json();
         } else if (source === "filepath") {
             let filepath = req.body.filepath;
-            await wordsBl.countWordsFromTextWithStream(filepath);
+            await wordsBl.countWordsFromTextFromFilepath(filepath);
             res.status(201).json();
         } else if (source === "url") {
             let url = req.body.url;
-            await wordsBl.countWordsFromTextWithStream(url);
+            await wordsBl.countWordsFromTextFromUrl(url);
             res.status(201).json();
         } else {
             console.log('source parameter is not legal. expected: body/filepath/url. got: ' + source);
@@ -46,5 +46,5 @@ async function countWordsFromText(req, res, next) {
 
 module.exports = {
     getWordStatistics,
-    countWordsFromText
+    countWordsFromText,
 };
