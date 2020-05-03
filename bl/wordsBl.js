@@ -79,6 +79,11 @@ class WordsBl {
     }
 
     async countWordsFromTextFromFilepath(filepath) {
+        // input check: make sure the filepath exists.
+        if (!fs.existsSync(filepath)) {
+            throw new Error('filepath does not exist. filepath was: ' + filepath);
+        }
+
         let wordDict = {};
 
         // This line opens the file as a readable stream
