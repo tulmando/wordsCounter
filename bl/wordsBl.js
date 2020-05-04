@@ -4,11 +4,9 @@ const fs = require('fs');
 const es = require('event-stream');
 const rs = require('randomstring');
 
-// TODO helpers
-
 class WordsBl {
     constructor() {
-        this.wordsCounter = require('../services').wordsCounter
+        this.wordsCounter = require('../services').wordsCounter;
     }
 
     async getWordStatistics(word) {

@@ -3,8 +3,8 @@
 const SwaggerExpress = require('swagger-express-mw');
 const swaggerUi = require('swagger-tools/middleware/swagger-ui');
 const express = require('express');
-// init the db for the word counter (by instantiation)
-const wordsCounter = require('../services').wordsCounter;
+// important to load the db data in advanced
+require('../services/db');
 
 const app = express();
 

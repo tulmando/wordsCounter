@@ -1,3 +1,7 @@
+temp-stream-*
+lokidb.json*
+.idea*
+
 # Logs
 logs
 *.log
