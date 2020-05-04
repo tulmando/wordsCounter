@@ -38,8 +38,8 @@ paths:
         - words
       parameters:
         - in: body
-          name: text source
-          description: The source of the text to count words from.
+          name: source
+          description: Source should be "body"/"filepath"/"url". Fill text/filepath/url accordingly.
           schema:
             required:
               - source

@@ -20,7 +20,6 @@ SwaggerExpress.create(config, function (err, swaggerExpress) {
     // Add swagger-ui (This must be before swaggerExpress.register)
     app.use(swaggerUi(swaggerExpress.runner.swagger));
 
-    // TODO IDO needed?
     // Redirect to swagger page
     app.get('/', (req, res) => res.redirect('/docs'));
 
