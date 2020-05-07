@@ -96,4 +96,7 @@ This repo is a web API with 2 endpoints:
 ## alternative solution
 - If the web-api should have supported no down time at all I would:
     - Use a sql db in the cloud instead of the lokijs.
+        - Each independent instance of the backend updates/query the sql db (the mutual exclusion will be given as a built in feature of the SaaS sql db).
     - Use Kubernetes to manage multi-instance web-api (so even if 1 fails, the web-api would be available).
+    - Use parallel computing to accelerate the computation: 
+        - break the text file to parts, send each part to a service. The service computes independently the words and updates the db.  
