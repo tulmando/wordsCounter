@@ -35,35 +35,40 @@ class WordsBl {
 
     async countWordsFromReadStream(readStream, wordDict) {
         let self = this;
-        // This will wait until we know the readable stream is actually valid before piping
-        readStream.on('ready', function () {
-            readStream.pipe(es.split())
-                .pipe(es.mapSync(async function (line) {
+        // I am wrapping with a promise here to make sure the all file computation is done before countWordsFromReadStream function will return
+        return new Promise(function (resolve, reject) {
+            // This will wait until we know the readable stream is actually valid before piping
+            readStream.on('ready', function () {
 
-                        // pause the readstream
-                        readStream.pause();
+                readStream.pipe(es.split())
+                    .pipe(es.mapSync(async function (line) {
 
-                        // process line
-                        await self.countWordsInLine(line, wordDict);
+                            // pause the readstream
+                            readStream.pause();
 
-                        // resume the readstream
-                        readStream.resume();
-                    })
-                        .on('error', function (err) {
-                            console.log('error in the es.mapSync: ' + err);
-                            throw err;
+                            // process line
+                            await self.countWordsInLine(line, wordDict);
+
+                            // resume the readstream
+                            readStream.resume();
                         })
-                        .on('end', async function () {
-                            console.log('Read entire file. updating word counter');
-                            await self.wordsCounter.bulkUpdate(wordDict);
-                        })
-                );
-        });
+                            .on('error', function (err) {
+                                console.log('error in the es.mapSync: ' + err);
+                                reject(err);
+                            })
+                            .on('end', async function () {
+                                console.log('Read entire file. updating word counter');
+                                await self.wordsCounter.bulkUpdate(wordDict);
+                                resolve();
+                            })
+                    );
+            });
 
-        // This catches any errors that happen while creating the readable stream (usually invalid names)
-        readStream.on('error', function (err) {
-            console.log('error in the readStream: ' + err);
-            throw err;
+            // This catches any errors that happen while creating the readable stream (usually invalid names)
+            readStream.on('error', function (err) {
+                console.log('error in the readStream: ' + err);
+                reject(err);
+            });
         });
     }
 
