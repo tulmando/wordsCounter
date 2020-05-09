@@ -26,9 +26,7 @@ This repo is a web API with 2 endpoints:
         - ```json
           {
             "source": "body",
-            "text": "Hi! My name is (what?), my name is (who?), my name is Slim Shady",
-            "filepath": "string",
-            "url": "string"
+            "text": "Hi! My name is (what?), my name is (who?), my name is Slim Shady"
           }
           ```
     - example for text in filepath:
@@ -36,9 +34,7 @@ This repo is a web API with 2 endpoints:
         - ```json
           {
             "source": "filepath",
-            "text": "string",
-            "filepath": "/Users/idotulma/go/src/wordsCounter/ido1.txt",
-            "url": "string"
+            "filepath": "/Users/idotulma/go/src/wordsCounter/ido1.txt"
           }
           ```
     - example for text in url:
@@ -46,8 +42,6 @@ This repo is a web API with 2 endpoints:
         - ```json
           {
             "source": "url",
-            "text": "string",
-            "filepath": "string",
             "url": "https://www.w3.org/TR/PNG/iso_8859-1.txt"
           }
           ```
