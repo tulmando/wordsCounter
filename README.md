@@ -62,9 +62,10 @@ This repo is a web API with 2 endpoints:
 - restart the server and call the word-statistics api (check the persistency).
 
 ## Assumptions
+- Words are separated with a space. All other characters are ignored.
 - Input text for the ‘word counter’
     - The text passed in the body of the api call does not exceed the limit of http POST (depending which browser it is).
-    - The RAM of the machine is big enough to contain the arriving text (for filepath/url cases).
+    - The hard disk of the machine is big enough to contain the arriving text (for the url case). It is essential because the stream is sent into a file from which another stream reads and calculates. 
 - There might be many api calls simultaneously from different tabs. Therefore, the persistence of the “wordsCounter” service should be managed with mutual exclusion (mutex).
 - The update of the ‘word counter’ will take place only once for each text. It means, the result of 'word statistics' (for any word) won't change till the ‘word counter’ call ends.
 - The RAM of the running machine is able to persist a dictionary containing all the words in english. Thanks to that, I don’t need to use an external DB. 
@@ -79,13 +80,14 @@ This repo is a web API with 2 endpoints:
 - DB
     - A local db will be used as a no-sql db (lokijs).
     - Mutual exclusion between the threads of the server (using a mutex). 
-        - If someone opens few-apis in parallel (few tabs), we want still want the words will be counted properly.
+        - If someone opens few-apis in parallel (few tabs), we still want the words will be counted properly.
 - API
     - word-counter
         - A single api supports all 3 modes (source parameter tells if it's body/filepath/url). 
             - I could have splitted this to 3 different apis.
         - The api call waits for a result (even if it's a long computation as a result of a really long text). 
         - For a bad url, response will be 404.
+        - For a bad filepath, response will be 400.
 - Business logic
     - Reading the text as a stream (for filepath/url cases).
 -  
